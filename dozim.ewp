@@ -148,27 +148,27 @@
         </option>
         <option>
           <name>CCListCFile</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCListCMnemonics</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCListCMessages</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCListAssFile</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCListAssSource</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCEnableRemarks</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCDiagSuppress</name>
@@ -230,7 +230,7 @@
         </option>
         <option>
           <name>CCDiagWarnAreErr</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCCharIs</name>
@@ -341,7 +341,7 @@
         </option>
         <option>
           <name>AList</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>AListHeader</name>
@@ -389,23 +389,23 @@
         </option>
         <option>
           <name>AXRef</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>AXRefDefines</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>AXRefInternal</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>AXRefDual</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>AIncludes</name>
-          <state>###Uninitialized###</state>
+          <state>$TOOLKIT_DIR$\INC\</state>
         </option>
         <option>
           <name>ADebug</name>
@@ -429,7 +429,7 @@
         </option>
         <option>
           <name>OutputFile</name>
-          <state></state>
+          <state>$FILE_BNAME$.r43</state>
         </option>
         <option>
           <name>IncExterns</name>
@@ -497,11 +497,11 @@
         </option>
         <option>
           <name>AlwaysOutput</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OverlapWarnings</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>NoGlobalCheck</name>
@@ -509,7 +509,7 @@
         </option>
         <option>
           <name>XList</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>SegmentMap</name>
@@ -754,7 +754,7 @@
         <option>
           <name>Variant Processor</name>
           <version>9</version>
-          <state>0</state>
+          <state>23</state>
         </option>
         <option>
           <name>PosIndCode</name>
@@ -787,46 +787,46 @@
         </option>
         <option>
           <name>RTDescription</name>
-          <state></state>
+          <state>Use the legacy C runtime library.</state>
         </option>
         <option>
           <name>RTConfigPath</name>
-          <state>xxx.h</state>
+          <state></state>
         </option>
         <option>
           <name>RTLibraryPath</name>
-          <state>xxx.r43</state>
+          <state>$TOOLKIT_DIR$\LIB\CLIB\cl430f.r43</state>
         </option>
         <option>
           <name>Input variant</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>Input description</name>
-          <state></state>
+          <state>Full formatting.</state>
         </option>
         <option>
           <name>Output variant</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>Output description</name>
-          <state></state>
+          <state>Full formatting.</state>
         </option>
         <option>
           <name>GHeapSize</name>
-          <state>###Uninitialized###</state>
+          <state>80</state>
         </option>
         <option>
           <name>GStackSize</name>
-          <state>###Uninitialized###</state>
+          <state>80</state>
         </option>
         <option>
           <name>GRuntimeLibSelectSlave</name>
           <version>0</version>
-          <state>1</state>
+          <state>4</state>
         </option>
         <option>
           <name>P7 Old Math Libraries</name>
@@ -851,7 +851,8 @@
         </option>
         <option>
           <name>CCIncludePaths</name>
-          <state>###Uninitialized###</state>
+          <state>$TOOLKIT_DIR$\INC\</state>
+          <state>$TOOLKIT_DIR$\INC\CLIB\</state>
         </option>
         <option>
           <name>CCDefines</name>
@@ -871,15 +872,15 @@
         </option>
         <option>
           <name>CCListCFile</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCListCMnemonics</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCListCMessages</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCListAssFile</name>
@@ -981,7 +982,7 @@
         </option>
         <option>
           <name>OutputFile</name>
-          <state></state>
+          <state>$FILE_BNAME$.r43</state>
         </option>
         <option>
           <name>CCLibConfigHeader</name>
@@ -1128,7 +1129,7 @@
         </option>
         <option>
           <name>AIncludes</name>
-          <state>###Uninitialized###</state>
+          <state>$TOOLKIT_DIR$\INC\</state>
         </option>
         <option>
           <name>ADebug</name>
@@ -1152,7 +1153,7 @@
         </option>
         <option>
           <name>OutputFile</name>
-          <state></state>
+          <state>$FILE_BNAME$.r43</state>
         </option>
         <option>
           <name>IncExterns</name>
@@ -1198,7 +1199,7 @@
         </option>
         <option>
           <name>OutputFile</name>
-          <state></state>
+          <state>dozim.d43</state>
         </option>
         <option>
           <name>OutputFormat</name>
@@ -1212,7 +1213,7 @@
         </option>
         <option>
           <name>SecondaryOutputFile</name>
-          <state></state>
+          <state>(None for the selected format)</state>
         </option>
         <option>
           <name>XDefines</name>
@@ -1232,7 +1233,7 @@
         </option>
         <option>
           <name>XList</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>SegmentMap</name>
@@ -1252,7 +1253,7 @@
         </option>
         <option>
           <name>XIncludes</name>
-          <state>###Uninitialized###</state>
+          <state>$TOOLKIT_DIR$\LIB\</state>
         </option>
         <option>
           <name>ModuleStatus</name>
@@ -1264,7 +1265,7 @@
         </option>
         <option>
           <name>XclFile</name>
-          <state>lnk0t.xcl</state>
+          <state>$TOOLKIT_DIR$\CONFIG\lnk430F1101.xcl</state>
         </option>
         <option>
           <name>XclFileSlave</name>
@@ -1352,15 +1353,15 @@
         </option>
         <option>
           <name>xcProgramEntryLabel</name>
-          <state></state>
+          <state>__program_start</state>
         </option>
         <option>
           <name>DebugInformation</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>RuntimeControl</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IoEmulation</name>
@@ -1392,7 +1393,7 @@
         </option>
         <option>
           <name>ExtraOutputFile</name>
-          <state></state>
+          <state>dozim.a43</state>
         </option>
         <option>
           <name>ExtraOutputFormat</name>
