@@ -33,7 +33,7 @@ void on_charge(void){
 // PORT_DIR_CAPACITOR|=CAPACITOR_PIN;      // направление на выход
 // PORT_OUT_CAPACITOR|=CAPACITOR_PIN;	// высокий уровень
  PORT_DIR_REZISTOR|=REZISTOR_PIN;	//включаем пин резистора на выход
- PORT_OUT_REZISTOR|=REZISTOR_PIN;	// низкий уровень
+ PORT_OUT_REZISTOR|=REZISTOR_PIN;	// высокий уровень
 
 }
 
@@ -71,9 +71,9 @@ void on_comparator_external(void){
 /****************************************/
 void off_charge(void){
  PORT_DIR_REZISTOR|=REZISTOR_PIN;	//включаем пин резистора на выход
- PORT_OUT_REZISTOR&=~REZISTOR_PIN;	// низкий уровень
  P2SEL|=CAPACITOR_PIN;                 // отключаем входной буфер
  PORT_DIR_CAPACITOR&=~CAPACITOR_PIN;      // направление на вход
  CAPD|=CAPACITOR_PIN; 			// отключаем входной буфер
+ PORT_OUT_REZISTOR&=~REZISTOR_PIN;	// низкий уровень
 
 }
