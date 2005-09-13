@@ -8,13 +8,17 @@
 #define CAPACITOR_PIN BIT4
 #define DIODE_PIN BIT3
 
+#define PORT_DIR_REZISTOR P2DIR
+#define PORT_OUT_REZISTOR P2OUT
+#define REZISTOR_PIN BIT5
+
 
 
 /****************************************/
 //инициализация параметров
 /****************************************/
 void init_params(){
- CACTL1=CARSEL;	//опорное напряжение на CA1
+ CACTL1=0;	//
  CAPD=DIODE_PIN;	//отключаем диод от входных буферов микросхемы
 }
 
@@ -23,10 +27,14 @@ void init_params(){
 /****************************************/
 
 
-void on_charge(){
- CAPD&=~CAPACITOR_PIN; 			// подключаем входной буфер
- PORT_DIR_CAPACITOR|=CAPACITOR_PIN;      // направление на выход
- PORT_OUT_CAPACITOR|=CAPACITOR_PIN;	// высокий уровень
+void on_charge(void){
+// CAPD&=~CAPACITOR_PIN; 			// подключаем входной буфер
+// P2SEL&=~CAPACITOR_PIN;                 // подключаем входной буфер
+// PORT_DIR_CAPACITOR|=CAPACITOR_PIN;      // направление на выход
+// PORT_OUT_CAPACITOR|=CAPACITOR_PIN;	// высокий уровень
+ PORT_DIR_REZISTOR|=REZISTOR_PIN;	//включаем пин резистора на выход
+ PORT_OUT_REZISTOR|=REZISTOR_PIN;	// низкий уровень
+
 }
 
 
@@ -35,33 +43,37 @@ void on_charge(){
 /****************************************/
 //включение компаратора и опорника на 0.25Vcc
 /****************************************/
-void on_comparator(){
+void on_comparator(void){
   //к диоду компаратор+ подключен
   //компаратор- от внешнего входа отключен
- CACTL2=(CACTL2&~(P2CA0|P2CA1|CAF))|P2CA0;	
+ CACTL2=(CACTL2&~(P2CA0|P2CA1|CAF))|P2CA0|P2CA1|CAF;	
   //!!! какое время включения (заранее) компаратора?
   //выбрано 0.25Vcc и подключено на компаратор-
- CACTL1=(CACTL1&~(CAREF0|CAREF1))|CAON|CAREF0|CARSEL;	//включаем компаратор
+ CACTL1=(CACTL1&~(CAREF0|CAREF1))|CAON|CAIE;	//включаем компаратор
 }
 
 /****************************************/
 //включение компаратора и внешнего выхода
 /****************************************/
-void on_comparator_external(){
+void on_comparator_external(void){
   //к диоду компаратор+ подключен
   //компаратор- подключен к внешнему входу
- CACTL2=(CACTL2&~(P2CA0|P2CA1|CAF))|P2CA0|P2CA1;	
+ CACTL2=(CACTL2&~(P2CA0|P2CA1|CAF))|P2CA1|P2CA0|CAF;	
   //!!! какое время включения (заранее) компаратора?
   //включаем компаратор
   //выключен внутренний опорник 
- CACTL1=(CACTL1&~(CAREF0|CAREF1))|CAON|CARSEL;	//включаем компаратор
+ CACTL1=(CACTL1&~(CAREF0|CAREF1))|CAON|CAIE;	//включаем компаратор
 }
 
 
 /****************************************/
 //выключение заряда внешнего конденсатора
 /****************************************/
-void off_charge(){
- CAPD|=CAPACITOR_PIN; 			// отключаем входной буфер
+void off_charge(void){
+ PORT_DIR_REZISTOR|=REZISTOR_PIN;	//включаем пин резистора на выход
+ PORT_OUT_REZISTOR&=~REZISTOR_PIN;	// низкий уровень
+ P2SEL|=CAPACITOR_PIN;                 // отключаем входной буфер
  PORT_DIR_CAPACITOR&=~CAPACITOR_PIN;      // направление на вход
+ CAPD|=CAPACITOR_PIN; 			// отключаем входной буфер
+
 }

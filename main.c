@@ -26,41 +26,35 @@ int divider=FOSC/freq;
 void main(void)
 { 
   WDTCTL = WDTPW + WDTHOLD;             // Stop watchdog timer
-  P2DIR |= 0x03;                        // Set P2.0, P2.1 to output direction
+//  P2DIR |= 0x03;                        // Set P2.0, P2.1 to output direction
   P1DIR |= BIT2|BIT3;
   P1OUT &= ~BIT2;
   P1OUT |= BIT3;
   P1SEL |= BIT2|BIT3;
-  init_params();
-  init_timer_a(7000);
-  volatile unsigned int y;
+  init_params();         
+  on_charge();
+  _EINT();                              // Enable interrupts
 
   for (;;)                              
   {
      volatile unsigned int i;
-    y++;
-    if (y>20) y=0;
-    init_timer_a(300*y+3000);
-    
-    switch(y&0x3){
-     case 0:
-      P2OUT=(P2OUT&0xFC)|0;
-      break;
-     case 1:
-      P2OUT=(P2OUT&0xFC)|1;
-      break;
-     case 2:
-      P2OUT=(P2OUT&0xFC)|2;
-      break;
-     case 3:
-      P2OUT=(P2OUT&0xFC)|3;
-      break;
-     }
 
-    i = 25000;                          // Delay
+    i = 800;                          // Delay
     do{ i--;
-    if ((i<1000)&&((i&0x3)==0)) 
+    if (i==101) on_charge();
+
+    if ((i<100)&&((i&0x3)==0)) 
       P1OUT^=(BIT2|BIT3);
     } while (i != 0);
+  on_comparator_external();
+  off_charge();
   }
 }
+
+// COMPARATORA_VECTOR interrupt service routine
+#pragma vector=COMPARATORA_VECTOR
+__interrupt void comparator (void)
+{
+ on_charge();
+}
+
