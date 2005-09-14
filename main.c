@@ -16,8 +16,8 @@ unsigned int hold_time;
 //#define Bitime    208                       // ~ 9615 baud
 
 //   Conditions for 9600 Baud SW UART, DCO ~ 770 kHz
-#define Bitime_5  39                       // ~ 0.5 bit length
-#define Bitime    78                       // ~ 9615 baud
+#define Bitime_5  40                       // ~ 0.5 bit length
+#define Bitime    80                       // ~ 9615 baud
 
 
 
@@ -65,10 +65,11 @@ void TX_Byte (void)
   while ( CCTL0 & CCIE );                   // Wait for TX completion
 }
 
+unsigned int tr[]={0x0,0x1,0x2,0x4,0x8,0x10,0x20,0x40,0x80};
 void main(void)
 { 
   WDTCTL = WDTPW + WDTHOLD;             // Stop watchdog timer
-//  P2DIR |= 0x03;                        // Set P2.0, P2.1 to output direction
+  P2DIR |= 0x03;                        // Set P2.0, P2.1 to output direction
   P1DIR |= BIT2|BIT3;
   P1OUT &= ~BIT2;
   P1OUT |= BIT3;
@@ -78,22 +79,28 @@ void main(void)
   on_charge();
   _EINT();                              // Enable interrupts
 
+  volatile unsigned int y=0;
   for (;;)                              
   {
      volatile unsigned int i;
-     volatile unsigned int y;
-
-    i = 200;                          // Delay
+    y++;
+    if (y>8) y=0;
+    i = 4000;                          // Delay
     do{ i--;
-    if (i==101){
-     on_charge();
-//     RXTXData=time_to_compare-hold_time;
-     RXTXData=0x50;
-     TX_Byte();                                // TX Back RXed Byte Received
-     }
+     if (i==102) 
+      P2OUT=(P2OUT&(0xFC))|1;
+     if (i==80 ) 
+      P2OUT&=0xFC;
 
-    if ((i<100)&&((i&0x3)==0)) 
-      P1OUT^=(BIT2|BIT3);
+     if (i==101){
+      on_charge();
+     RXTXData=time_to_compare-hold_time;
+//      RXTXData=tr[y];
+      TX_Byte();                                // TX Back RXed Byte Received
+      }
+
+     if ((i<100)&&((i&0x3)==0)) 
+       P1OUT^=(BIT2|BIT3);
     } while (i != 0);
   on_comparator_external();
   hold_time=TAR;
