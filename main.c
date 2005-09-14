@@ -16,8 +16,8 @@ unsigned int hold_time;
 //#define Bitime    208                       // ~ 9615 baud
 
 //   Conditions for 9600 Baud SW UART, DCO ~ 770 kHz
-#define Bitime_5  40                       // ~ 0.5 bit length
-#define Bitime    80                       // ~ 9615 baud
+#define Bitime_5  39                       // ~ 0.5 bit length
+#define Bitime    78                       // ~ 9615 baud
 
 
 
@@ -60,6 +60,7 @@ void TX_Byte (void)
   CCR0 += Bitime;                           // Some time till first bit
   RXTXData |= 0x100;                        // Add mark stop bit to RXTXData
   RXTXData = RXTXData << 1;                 // Add space start bit
+//  CCTL0 = OUTMOD0+OUTMOD2 + CCIE;                   // TXD = mark = idle
   CCTL0 = OUTMOD0 + CCIE;                   // TXD = mark = idle
   while ( CCTL0 & CCIE );                   // Wait for TX completion
 }
@@ -80,12 +81,14 @@ void main(void)
   for (;;)                              
   {
      volatile unsigned int i;
+     volatile unsigned int y;
 
-    i = 800;                          // Delay
+    i = 200;                          // Delay
     do{ i--;
     if (i==101){
      on_charge();
-     RXTXData=time_to_compare-hold_time;
+//     RXTXData=time_to_compare-hold_time;
+     RXTXData=0x50;
      TX_Byte();                                // TX Back RXed Byte Received
      }
 
@@ -145,9 +148,12 @@ __interrupt void Timer_A0 (void)
     CCTL0 &= ~ CCIE;                        // All bits TXed, disable interrupt
     else
     {
-      CCTL0 |=  OUTMOD2;                    // TX Space
-      if (RXTXData & 0x01)
-      CCTL0 &= ~ OUTMOD2;                   // TX Mark
+      if ((RXTXData & 0x01)==0)
+//      if ((RXTXData & 0x01)==1)
+       CCTL0 |=  OUTMOD2;                    // TX Space
+      else
+       CCTL0 &= ~ OUTMOD2;                   // TX Mark
+ 
       RXTXData = RXTXData >> 1;
       BitCnt --;
     }
