@@ -32,11 +32,24 @@ void on_charge(void){
 // P2SEL&=~CAPACITOR_PIN;                 // подключаем входной буфер
 // PORT_DIR_CAPACITOR|=CAPACITOR_PIN;      // направление на выход
 // PORT_OUT_CAPACITOR|=CAPACITOR_PIN;	// высокий уровень
+
+//отключаем (на всякий случай) выход p2.4 (конденсатор)
+ CAPD|=CAPACITOR_PIN; 			//отключаем входной буфер
+ PORT_DIR_CAPACITOR&=~CAPACITOR_PIN;      // направление на вход
+ PORT_OUT_CAPACITOR|=CAPACITOR_PIN;	// высокий уровень
+
+
  PORT_DIR_REZISTOR|=REZISTOR_PIN;	//включаем пин резистора на выход
  PORT_OUT_REZISTOR|=REZISTOR_PIN;	// высокий уровень
 
 }
 
+void  fast_charge(void){
+ CAPD&=~CAPACITOR_PIN; 			// подключаем входной буфер
+ P2SEL&=~CAPACITOR_PIN;                 // подключаем входной буфер
+ PORT_OUT_CAPACITOR|=CAPACITOR_PIN;	// высокий уровень
+ PORT_DIR_CAPACITOR|=CAPACITOR_PIN;      // направление на выход
+}
 
 
 

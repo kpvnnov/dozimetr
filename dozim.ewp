@@ -201,12 +201,12 @@
         <option>
           <name>CCOptimization</name>
           <version>2</version>
-          <state>2</state>
+          <state>4</state>
         </option>
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>00000</state>
+          <state>11111</state>
         </option>
         <option>
           <name>CCMakeLibraryModule</name>
@@ -283,7 +283,7 @@
         <option>
           <name>CCOptimizationSlave</name>
           <version>2</version>
-          <state>2</state>
+          <state>4</state>
         </option>
         <option>
           <name>OI128KB</name>
