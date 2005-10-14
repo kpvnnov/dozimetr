@@ -1,4 +1,4 @@
-void init_params();
+void init_params(void);
 void on_charge(void);
 void off_charge(void);
 void on_comparator(void);

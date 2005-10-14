@@ -15,16 +15,75 @@ unsigned int hold_time;
 //#define Bitime_5  104                       // ~ 0.5 bit length
 //#define Bitime    208                       // ~ 9615 baud
 
+//#define Bitime_5  56                       // ~ 0.5 bit length
+//#define Bitime    112                       // ~ 9615 baud
+
+#define Bitime_5  39                       // ~ 0.5 bit length
+#define Bitime    78                       // ~ 9615 baud
+
+
+#ifdef __IO430X21X1
+//   Conditions for 9600 Baud SW UART, DCO ~ 770 kHz
+#define Bitime_5  20                       // ~ 0.5 bit length
+#define Bitime    40                       // ~ 9615 baud
+
+#elsifdef __IO430X11X1
 //   Conditions for 9600 Baud SW UART, DCO ~ 770 kHz
 #define Bitime_5  40                       // ~ 0.5 bit length
 #define Bitime    80                       // ~ 9615 baud
 
-#define BUTTON_BIT BIT0 
+#endif
+
+
+#define BUTTON_BIT BIT0
+
+#define  ESCAPE         0x7D
+#define  EOFPACKET      0x7E    //код признака конца кадра
+
+//номер порта направления, на котором стоит RC-цепочка
+#define PORT_DIR_CAPACITOR P2DIR
+//номер порта вывода, на котором стоит RC-цепочка
+#define PORT_OUT_CAPACITOR P2OUT
+//порядковый номер пина порта, на котором стоит RC-цепочка
+#define CAPACITOR_PIN BIT4
+#define DIODE_PIN BIT3
+
+#define PORT_DIR_REZISTOR P2DIR
+#define PORT_OUT_REZISTOR P2OUT
+#define REZISTOR_PIN BIT5
+
+
+
 
 int divider;
 volatile unsigned int c_beep;
 volatile unsigned char button_pressed;
 volatile unsigned char button_release;
+
+
+/****************************************/
+//включение заряда внешнего конденсатора
+/****************************************/
+
+#pragma inline=forced
+inline void on_charge(void){
+// CAPD&=~CAPACITOR_PIN; 			// подключаем входной буфер
+// P2SEL&=~CAPACITOR_PIN;                 // подключаем входной буфер
+// PORT_DIR_CAPACITOR|=CAPACITOR_PIN;      // направление на выход
+// PORT_OUT_CAPACITOR|=CAPACITOR_PIN;	// высокий уровень
+
+//отключаем (на всякий случай) выход p2.4 (конденсатор)
+ CAPD|=CAPACITOR_PIN; 			//отключаем входной буфер
+ PORT_DIR_CAPACITOR&=~CAPACITOR_PIN;      // направление на вход
+ PORT_OUT_CAPACITOR|=CAPACITOR_PIN;	// высокий уровень
+
+
+ PORT_DIR_REZISTOR|=REZISTOR_PIN;	//включаем пин резистора на выход
+ PORT_OUT_REZISTOR|=REZISTOR_PIN;	// высокий уровень
+
+}
+
+
 void init_timer_a(int freq){
 
     P1SEL |= BIT2|BIT3;
@@ -38,8 +97,12 @@ void init_timer_a(int freq){
     CCTL1|=CCIE    /* разрешаем прерывания */;
 }
 // Timer_A3 Interrupt Vector (TAIV) handler
-#pragma vector=TIMERA1_VECTOR
+    #if __VER__ < 200
+   interrupt[TIMERA1_VECTOR] void Timer_A (void)
+    #else
+     #pragma vector=TIMERA1_VECTOR
 __interrupt void Timer_A(void)
+     #endif
 {
   switch( TAIV )
   {
@@ -56,9 +119,9 @@ __interrupt void Timer_A(void)
      }
     }
            break;
-  case  4: 
+  case  4:
     break;                           // CCR2 not used
-  case 10: 
+  case 10:
 
    if ((P1IN&BUTTON_BIT)==0){
     if (button_pressed<10)
@@ -107,49 +170,73 @@ void init_key(void){
   P1IE |= BUTTON_BIT;                         // P2.0 interrupt enabled
 }
 // Port 1 interrupt service routine
-#pragma vector=PORT1_VECTOR
+
+    #if __VER__ < 200
+   interrupt[PORT1_VECTOR] void Port_1 (void)
+    #else
+      #pragma vector=PORT1_VECTOR
 __interrupt void Port_1(void)
+     #endif
 {
   P1IE &= ~BUTTON_BIT;                         // P2.0 interrupt disabled
   init_timer_a(3000);
   button_pressed=1;
 }
 
+void transmit(unsigned char transfer){
+     if (transfer==EOFPACKET||transfer==ESCAPE){
+      RXTXData=ESCAPE;
+      TX_Byte();                                // TX Back RXed Byte Received
+      RXTXData=transfer^0x40;
+      TX_Byte();                                // TX Back RXed Byte Received
+      }
+     else{
+      RXTXData=transfer;
+      TX_Byte();                                // TX Back RXed Byte Received
+      }
+}
 
 void main(void)
-{ 
+{
+  volatile unsigned int y=0;
+  unsigned char transfer;
   WDTCTL = WDTPW + WDTHOLD;             // Stop watchdog timer
   P2DIR |= 0x03;                        // Set P2.0, P2.1 to output direction
   P1DIR |= BIT2|BIT3;
   P1OUT &= ~(BIT2|BIT3);
   button_pressed=0;
   button_release=0;
-  init_params();         
+  init_params();
+
+
+
   init_soft_uart();
   init_key();
   on_charge();
   _EINT();                              // Enable interrupts
 
-  volatile unsigned int y=0;
-  for (;;)                              
+  for (;;)
   {
      volatile unsigned int i;
     y++;
     if (y>7) y=0;
     i = 6000;                          // Delay
     do{ i--;
-     if (i==5000) 
+     if (i==5000)
       switch(y){
        case 3: P2OUT=(P2OUT&(0xFC))|1; break;
        case 5: P2OUT=(P2OUT&(0xFC))|2; break;
        }
-     if (i==3000 ) 
+     if (i==3000 )
       P2OUT&=0xFC;
 
      if (i==101){
       on_charge();
-     RXTXData=(time_to_compare-hold_time)>>3;
-//      RXTXData=tr[y];
+      transfer=(time_to_compare-hold_time);
+      transmit(transfer);
+      transmit(~transfer);
+      RXTXData=EOFPACKET;
+//      RXTXData=0xF7;
       TX_Byte();                                // TX Back RXed Byte Received
       }
      if (i==50){
@@ -168,17 +255,33 @@ void main(void)
   }
 }
 
+
+void  fast_charge(void){
+ CAPD&=~CAPACITOR_PIN; 			// подключаем входной буфер
+ P2SEL&=~CAPACITOR_PIN;                 // подключаем входной буфер
+ PORT_OUT_CAPACITOR|=CAPACITOR_PIN;	// высокий уровень
+ PORT_DIR_CAPACITOR|=CAPACITOR_PIN;      // направление на выход
+}
+
 // COMPARATORA_VECTOR interrupt service routine
+    #if __VER__ < 200
+   interrupt[COMPARATORA_VECTOR] void comparator (void)
+    #else
 #pragma vector=COMPARATORA_VECTOR
 __interrupt void comparator (void)
+     #endif
 {
  time_to_compare=TAR;
  on_charge();
 }
 
 // Timer A0 interrupt service routine
+    #if __VER__ < 200
+   interrupt[TIMERA0_VECTOR] void Timer_A0 (void)
+    #else
 #pragma vector=TIMERA0_VECTOR
 __interrupt void Timer_A0 (void)
+     #endif
 {
   CCR0 += Bitime;                           // Add Offset to CCR0
 
@@ -193,9 +296,62 @@ __interrupt void Timer_A0 (void)
        CCTL0 |=  OUTMOD2;                    // TX Space
       else
        CCTL0 &= ~ OUTMOD2;                   // TX Mark
- 
+
       RXTXData = RXTXData >> 1;
       BitCnt --;
     }
   }
+}
+
+
+
+
+/****************************************/
+//инициализация параметров
+/****************************************/
+void init_params(void){
+ CACTL1=0;	//
+ CAPD=DIODE_PIN;	//отключаем диод от входных буферов микросхемы
+ BCSCTL1=(BCSCTL1&~(RSEL0|RSEL1|RSEL2)RSEL0;
+}
+
+
+
+
+/****************************************/
+//включение компаратора и опорника на 0.25Vcc
+/****************************************/
+void on_comparator(void){
+  //к диоду компаратор+ подключен
+  //компаратор- от внешнего входа отключен
+ CACTL2=(CACTL2&~(P2CA0|P2CA1|CAF))|P2CA0|P2CA1|CAF;	
+  //!!! какое время включения (заранее) компаратора?
+  //выбрано 0.25Vcc и подключено на компаратор-
+ CACTL1=(CACTL1&~(CAREF0|CAREF1))|CAON|CAIE;	//включаем компаратор
+}
+
+/****************************************/
+//включение компаратора и внешнего выхода
+/****************************************/
+void on_comparator_external(void){
+  //к диоду компаратор+ подключен
+  //компаратор- подключен к внешнему входу
+ CACTL2=(CACTL2&~(P2CA0|P2CA1|CAF))|P2CA1|P2CA0|CAF;	
+  //!!! какое время включения (заранее) компаратора?
+  //включаем компаратор
+  //выключен внутренний опорник
+ CACTL1=(CACTL1&~(CAREF0|CAREF1))|CAON|CAIE;	//включаем компаратор
+}
+
+
+/****************************************/
+//выключение заряда внешнего конденсатора
+/****************************************/
+void off_charge(void){
+ PORT_DIR_REZISTOR|=REZISTOR_PIN;	//включаем пин резистора на выход
+ P2SEL|=CAPACITOR_PIN;                 // отключаем входной буфер
+ PORT_DIR_CAPACITOR&=~CAPACITOR_PIN;      // направление на вход
+ CAPD|=CAPACITOR_PIN; 			// отключаем входной буфер
+ PORT_OUT_REZISTOR&=~REZISTOR_PIN;	// низкий уровень
+
 }

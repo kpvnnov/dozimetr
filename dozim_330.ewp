@@ -12,7 +12,7 @@
       <name>General</name>
       <archiveVersion>5</archiveVersion>
       <data>
-        <version>10</version>
+        <version>16</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -29,8 +29,8 @@
         </option>
         <option>
           <name>Variant Processor</name>
-          <version>9</version>
-          <state>23</state>
+          <version>15</version>
+          <state>27</state>
         </option>
         <option>
           <name>PosIndCode</name>
@@ -105,11 +105,20 @@
           <state>4</state>
         </option>
         <option>
-          <name>P7 Old Math Libraries</name>
-          <state>1</state>
+          <name>OGCore</name>
+          <state>0</state>
         </option>
         <option>
-          <name>OGCore</name>
+          <name>GeneralMisraRules</name>
+          <version>0</version>
+          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
+        </option>
+        <option>
+          <name>GeneralEnableMisra</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GeneralMisraVerbose</name>
           <state>0</state>
         </option>
       </data>
@@ -118,17 +127,12 @@
       <name>ICC430</name>
       <archiveVersion>4</archiveVersion>
       <data>
-        <version>14</version>
+        <version>20</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
           <name>PosIndCode</name>
           <state>0</state>
-        </option>
-        <option>
-          <name>CCIncludePaths</name>
-          <state>$TOOLKIT_DIR$\INC\</state>
-          <state>$TOOLKIT_DIR$\INC\CLIB\</state>
         </option>
         <option>
           <name>CCDefines</name>
@@ -209,10 +213,6 @@
           <state>11111</state>
         </option>
         <option>
-          <name>CCMakeLibraryModule</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCObjUseModuleName</name>
           <state>0</state>
         </option>
@@ -286,12 +286,54 @@
           <state>4</state>
         </option>
         <option>
-          <name>OI128KB</name>
+          <name>CPIC</name>
           <state>1</state>
         </option>
         <option>
-          <name>CPIC</name>
+          <name>IExtraOptionsCheck</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IExtraOptions</name>
+          <state></state>
+        </option>
+        <option>
+          <name>PreInclude</name>
+          <state></state>
+        </option>
+        <option>
+          <name>CCOverrideModuleTypeDefault</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRadioModuleType</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRadioModuleTypeSlave</name>
           <state>1</state>
+        </option>
+        <option>
+          <name>newCCIncludePaths</name>
+          <state></state>
+        </option>
+        <option>
+          <name>CCStdIncCheck</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCStdIncludePaths</name>
+          <state>$TOOLKIT_DIR$\INC\</state>
+          <state>$TOOLKIT_DIR$\INC\CLIB\</state>
+        </option>
+        <option>
+          <name>CompilerMisraRules</name>
+          <version>0</version>
+          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
+        </option>
+        <option>
+          <name>CompilerMisraOverride</name>
+          <state>0</state>
         </option>
       </data>
     </settings>
@@ -299,7 +341,7 @@
       <name>A430</name>
       <archiveVersion>4</archiveVersion>
       <data>
-        <version>8</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -440,12 +482,24 @@
           <state>0</state>
         </option>
         <option>
-          <name>OA128KB</name>
-          <state>1</state>
+          <name>AExtraOptionsCheck</name>
+          <state>0</state>
         </option>
         <option>
-          <name>MakeLibraryNew</name>
+          <name>AExtraOptions</name>
+          <state></state>
+        </option>
+        <option>
+          <name>AOverrideModuleTypeDefault</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>ARadioModuleType</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>ARadioModuleTypeSlave</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -463,10 +517,18 @@
       <data/>
     </settings>
     <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>1</archiveVersion>
+      <data>
+        <prebuild></prebuild>
+        <postbuild></postbuild>
+      </data>
+    </settings>
+    <settings>
       <name>XLINK</name>
       <archiveVersion>4</archiveVersion>
       <data>
-        <version>17</version>
+        <version>20</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>1</debug>
         <option>
@@ -475,11 +537,11 @@
         </option>
         <option>
           <name>OutputFile</name>
-          <state>dozim.d43</state>
+          <state>dozim_330.d43</state>
         </option>
         <option>
           <name>OutputFormat</name>
-          <version>8</version>
+          <version>11</version>
           <state>33</state>
         </option>
         <option>
@@ -541,7 +603,7 @@
         </option>
         <option>
           <name>XclFile</name>
-          <state>$TOOLKIT_DIR$\CONFIG\lnk430F1101.xcl</state>
+          <state>$TOOLKIT_DIR$\CONFIG\lnk430F1121.xcl</state>
         </option>
         <option>
           <name>XclFileSlave</name>
@@ -669,11 +731,11 @@
         </option>
         <option>
           <name>ExtraOutputFile</name>
-          <state>dozim.a43</state>
+          <state>dozim_330.a43</state>
         </option>
         <option>
           <name>ExtraOutputFormat</name>
-          <version>8</version>
+          <version>11</version>
           <state>23</state>
         </option>
         <option>
@@ -695,6 +757,38 @@
         </option>
         <option>
           <name>BufferedTermOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XExtraOptionsCheck</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XExtraOptions</name>
+          <state></state>
+        </option>
+        <option>
+          <name>OverlaySystemMap</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>RawBinaryFile</name>
+          <state></state>
+        </option>
+        <option>
+          <name>RawBinarySymbol</name>
+          <state></state>
+        </option>
+        <option>
+          <name>RawBinarySegment</name>
+          <state></state>
+        </option>
+        <option>
+          <name>RawBinaryAlign</name>
+          <state></state>
+        </option>
+        <option>
+          <name>XLinkMisraHandler</name>
           <state>0</state>
         </option>
       </data>
@@ -736,7 +830,7 @@
       <name>General</name>
       <archiveVersion>5</archiveVersion>
       <data>
-        <version>10</version>
+        <version>16</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -753,7 +847,7 @@
         </option>
         <option>
           <name>Variant Processor</name>
-          <version>9</version>
+          <version>15</version>
           <state>0</state>
         </option>
         <option>
@@ -829,11 +923,20 @@
           <state>1</state>
         </option>
         <option>
-          <name>P7 Old Math Libraries</name>
-          <state>1</state>
+          <name>OGCore</name>
+          <state>0</state>
         </option>
         <option>
-          <name>OGCore</name>
+          <name>GeneralMisraRules</name>
+          <version>0</version>
+          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
+        </option>
+        <option>
+          <name>GeneralEnableMisra</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>GeneralMisraVerbose</name>
           <state>0</state>
         </option>
       </data>
@@ -842,7 +945,7 @@
       <name>ICC430</name>
       <archiveVersion>4</archiveVersion>
       <data>
-        <version>14</version>
+        <version>20</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -850,12 +953,8 @@
           <state>0</state>
         </option>
         <option>
-          <name>CCIncludePaths</name>
-          <state>###Uninitialized###</state>
-        </option>
-        <option>
           <name>CCDefines</name>
-          <state></state>
+          <state>NDEBUG</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -932,10 +1031,6 @@
           <state>11111</state>
         </option>
         <option>
-          <name>CCMakeLibraryModule</name>
-          <state>0</state>
-        </option>
-        <option>
           <name>CCObjUseModuleName</name>
           <state>0</state>
         </option>
@@ -1009,12 +1104,53 @@
           <state>4</state>
         </option>
         <option>
-          <name>OI128KB</name>
+          <name>CPIC</name>
           <state>1</state>
         </option>
         <option>
-          <name>CPIC</name>
+          <name>IExtraOptionsCheck</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>IExtraOptions</name>
+          <state></state>
+        </option>
+        <option>
+          <name>PreInclude</name>
+          <state></state>
+        </option>
+        <option>
+          <name>CCOverrideModuleTypeDefault</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRadioModuleType</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCRadioModuleTypeSlave</name>
           <state>1</state>
+        </option>
+        <option>
+          <name>newCCIncludePaths</name>
+          <state></state>
+        </option>
+        <option>
+          <name>CCStdIncCheck</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>CCStdIncludePaths</name>
+          <state>###Uninitialized###</state>
+        </option>
+        <option>
+          <name>CompilerMisraRules</name>
+          <version>0</version>
+          <state>1000111110110101101110011100111111101110011011000101110111101101100111111111111100110011111001110111001111111111111111111111111</state>
+        </option>
+        <option>
+          <name>CompilerMisraOverride</name>
+          <state>0</state>
         </option>
       </data>
     </settings>
@@ -1022,7 +1158,7 @@
       <name>A430</name>
       <archiveVersion>4</archiveVersion>
       <data>
-        <version>8</version>
+        <version>11</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1163,12 +1299,24 @@
           <state>0</state>
         </option>
         <option>
-          <name>OA128KB</name>
-          <state>1</state>
+          <name>AExtraOptionsCheck</name>
+          <state>0</state>
         </option>
         <option>
-          <name>MakeLibraryNew</name>
+          <name>AExtraOptions</name>
+          <state></state>
+        </option>
+        <option>
+          <name>AOverrideModuleTypeDefault</name>
           <state>0</state>
+        </option>
+        <option>
+          <name>ARadioModuleType</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>ARadioModuleTypeSlave</name>
+          <state>1</state>
         </option>
       </data>
     </settings>
@@ -1186,10 +1334,18 @@
       <data/>
     </settings>
     <settings>
+      <name>BUILDACTION</name>
+      <archiveVersion>1</archiveVersion>
+      <data>
+        <prebuild></prebuild>
+        <postbuild></postbuild>
+      </data>
+    </settings>
+    <settings>
       <name>XLINK</name>
       <archiveVersion>4</archiveVersion>
       <data>
-        <version>17</version>
+        <version>20</version>
         <wantNonLocal>1</wantNonLocal>
         <debug>0</debug>
         <option>
@@ -1202,7 +1358,7 @@
         </option>
         <option>
           <name>OutputFormat</name>
-          <version>8</version>
+          <version>11</version>
           <state>33</state>
         </option>
         <option>
@@ -1396,7 +1552,7 @@
         </option>
         <option>
           <name>ExtraOutputFormat</name>
-          <version>8</version>
+          <version>11</version>
           <state>23</state>
         </option>
         <option>
@@ -1418,6 +1574,38 @@
         </option>
         <option>
           <name>BufferedTermOutput</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XExtraOptionsCheck</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>XExtraOptions</name>
+          <state></state>
+        </option>
+        <option>
+          <name>OverlaySystemMap</name>
+          <state>0</state>
+        </option>
+        <option>
+          <name>RawBinaryFile</name>
+          <state></state>
+        </option>
+        <option>
+          <name>RawBinarySymbol</name>
+          <state></state>
+        </option>
+        <option>
+          <name>RawBinarySegment</name>
+          <state></state>
+        </option>
+        <option>
+          <name>RawBinaryAlign</name>
+          <state></state>
+        </option>
+        <option>
+          <name>XLinkMisraHandler</name>
           <state>0</state>
         </option>
       </data>
