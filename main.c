@@ -1,4 +1,4 @@
- #include  <msp430x11x1.h>
+ #include  <msp430x11x1.h>              
  #include "includes.h"
 
 #define FOSC	770000
@@ -10,7 +10,7 @@ unsigned int RXTXData;
 unsigned int time_to_compare;
 unsigned int hold_time;
 
-//   Conditions for 9600 Baud SW UART, DCO ~ 2MHz
+//   Conditions for 9600 Baud SW UART,
 
 //#define Bitime_5  104                       // ~ 0.5 bit length
 //#define Bitime    208                       // ~ 9615 baud
@@ -18,21 +18,11 @@ unsigned int hold_time;
 //#define Bitime_5  56                       // ~ 0.5 bit length
 //#define Bitime    112                       // ~ 9615 baud
 
-#define Bitime_5  39                       // ~ 0.5 bit length
-#define Bitime    78                       // ~ 9615 baud
+//   Conditions for 9600 Baud SW UART, 2 Mhz
+#define Bitime_5  104                       // ~ 0.5 bit length
+#define Bitime    208                       // ~ 9615 baud
 
 
-#ifdef __IO430X21X1
-//   Conditions for 9600 Baud SW UART, DCO ~ 770 kHz
-#define Bitime_5  20                       // ~ 0.5 bit length
-#define Bitime    40                       // ~ 9615 baud
-
-#elsifdef __IO430X11X1
-//   Conditions for 9600 Baud SW UART, DCO ~ 770 kHz
-#define Bitime_5  40                       // ~ 0.5 bit length
-#define Bitime    80                       // ~ 9615 baud
-
-#endif
 
 
 #define BUTTON_BIT BIT0
@@ -312,7 +302,7 @@ __interrupt void Timer_A0 (void)
 void init_params(void){
  CACTL1=0;	//
  CAPD=DIODE_PIN;	//отключаем диод от входных буферов микросхемы
- BCSCTL1=(BCSCTL1&~(RSEL0|RSEL1|RSEL2)RSEL0;
+ BCSCTL1=(BCSCTL1&~(RSEL0|RSEL1|RSEL2))|RSEL1|RSEL2;
 }
 
 
